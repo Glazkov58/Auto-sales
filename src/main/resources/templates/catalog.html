@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог Автомобилей | AutoMarket</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .hero-catalog {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), url('https://via.placeholder.com/1920x400?text=AutoCatalog') no-repeat center center);
+            background-size: cover;
+            padding: 100px 0;
+            color: white;
+        }
+        .car-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .car-img {
+            height: 180px;
+            object-fit: cover;
+        }
+        .price-tag {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .filter-card {
+            position: sticky;
+            top: 20px;
+        }
+        .badge-discount {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .pagination .page-link {
+            color: #0c0203;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-car me-2"></i>AutoMarket
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/catalog">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Финансирование</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Оценить авто</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light me-2">
+                        <a class="nav-link" href="/auth">
+                        <i class="fas fa-user me-1"></i> Войти
+                        </a>
+                    </button>
+                    <button class="btn btn-danger">
+                        <a class="nav-link" href="/addauth">
+                        <i class="fas fa-plus me-1"></i> Добавить авто
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section class="hero-catalog">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Каталог автомобилей</h1>
+            <p class="lead mb-5">Более 25 000 предложений по всей России</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Фильтры -->
+            <div class="col-lg-3 mb-4">
+                <div class="card filter-card shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Фильтры</h5>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <!-- Марка -->
+                            <div class="mb-3">
+                                <label class="form-label">Марка</label>
+                                <select class="form-select">
+                                    <option selected>Все марки</option>
+                                    <option>BMW</option>
+                                    <option>Audi</option>
+                                    <option>Mercedes</option>
+                                    <option>Toyota</option>
+                                    <option>Honda</option>
+                                    <option>Kia</option>
+                                    <option>Hyundai</option>
+                                </select>
+                            </div>
+
+                            <!-- Модель -->
+                            <div class="mb-3">
+                                <label class="form-label">Модель</label>
+                                <select class="form-select" disabled>
+                                    <option selected>Сначала выберите марку</option>
+                                </select>
+                            </div>
+
+                            <!-- Год -->
+                            <div class="mb-3">
+                                <label class="form-label">Год выпуска</label>
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <select class="form-select">
+                                            <option selected>От</option>
+                                            <option>2023</option>
+                                            <option>2022</option>
+                                            <option>2021</option>
+                                            <option>2020</option>
+                                            <option>2019</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select">
+                                            <option selected>До</option>
+                                            <option>2023</option>
+                                            <option>2022</option>
+                                            <option>2021</option>
+                                            <option>2020</option>
+                                            <option>2019</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Цена -->
+                            <div class="mb-3">
+                                <label class="form-label">Цена, ₽</label>
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control" placeholder="От">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" placeholder="До">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Пробег -->
+                            <div class="mb-3">
+                                <label class="form-label">Пробег, км</label>
+                                <div class="row g-2">
+                                    <div class="col">
+                                        <input type="number" class="form-control" placeholder="От">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" placeholder="До">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Тип топлива -->
+                            <div class="mb-3">
+                                <label class="form-label">Топливо</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="fuel1" checked>
+                                    <label class="form-check-label" for="fuel1">Бензин</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="fuel2" checked>
+                                    <label class="form-check-label" for="fuel2">Дизель</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="fuel3">
+                                    <label class="form-check-label" for="fuel3">Электро</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="fuel4">
+                                    <label class="form-check-label" for="fuel4">Гибрид</label>
+                                </div>
+                            </div>
+
+                            <!-- КПП -->
+                            <div class="mb-3">
+                                <label class="form-label">Коробка передач</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="transmission1" checked>
+                                    <label class="form-check-label" for="transmission1">Автомат</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="transmission2" checked>
+                                    <label class="form-check-label" for="transmission2">Механика</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="transmission3">
+                                    <label class="form-check-label" for="transmission3">Робот</label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger w-100">
+                                <i class="fas fa-search me-2"></i>Показать 1 245 авто
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary w-100 mt-2">
+                                Сбросить фильтры
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Список автомобилей -->
+            <div class="col-lg-9">
+                <!-- Сортировка -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body py-2">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                            <div class="mb-2 mb-md-0">
+                                <span class="me-2">Сортировка:</span>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-secondary active">По умолчанию</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Дешевые</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Дорогие</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Новые</button>
+                                    <button class="btn btn-sm btn-outline-secondary">С пробегом</button>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="me-2">Показывать:</span>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-secondary active">12</button>
+                                    <button class="btn btn-sm btn-outline-secondary">24</button>
+                                    <button class="btn btn-sm btn-outline-secondary">48</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточки автомобилей -->
+                <div class="row">
+                    <!-- Авто 1 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card car-card h-100">
+                            <span class="badge bg-danger badge-discount">-15%</span>
+                            <img src="https://via.placeholder.com/400x300?text=BMW+5+Series" class="card-img-top car-img" alt="BMW 5 Series">
+                            <div class="card-body">
+                                <h5 class="card-title">BMW 5 Series 2021</h5>
+                                <p class="card-text text-muted small">2.0 л, бензин, автомат, 36 500 км</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-tag text-danger">3 450 000 ₽</span>
+                                    <span class="text-muted text-decoration-line-through small">4 050 000 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-grid">
+                                    <a href="/card" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Авто 2 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card car-card h-100">
+                            <img src="https://via.placeholder.com/400x300?text=Audi+A6" class="card-img-top car-img" alt="Audi A6">
+                            <div class="card-body">
+                                <h5 class="card-title">Audi A6 2022</h5>
+                                <p class="card-text text-muted small">2.0 л, бензин, автомат, 12 300 км</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-tag text-danger">3 850 000 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-grid">
+                                    <a href="#" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Авто 3 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card car-card h-100">
+                            <span class="badge bg-danger badge-discount">-10%</span>
+                            <img src="https://via.placeholder.com/400x300?text=Mercedes+E-Class" class="card-img-top car-img" alt="Mercedes E-Class">
+                            <div class="card-body">
+                                <h5 class="card-title">Mercedes E-Class 2020</h5>
+                                <p class="card-text text-muted small">2.0 л, дизель, автомат, 58 200 км</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-tag text-danger">3 250 000 ₽</span>
+                                    <span class="text-muted text-decoration-line-through small">3 610 000 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-grid">
+                                    <a href="#" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Авто 4 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card car-card h-100">
+                            <img src="https://via.placeholder.com/400x300?text=Toyota+Camry" class="card-img-top car-img" alt="Toyota Camry">
+                            <div class="card-body">
+                                <h5 class="card-title">Toyota Camry 2021</h5>
+                                <p class="card-text text-muted small">2.5 л, бензин, автомат, 42 100 км</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-tag text-danger">2 150 000 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-grid">
+                                    <a href="#" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Авто 5 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card car-card h-100">
+                            <img src="https://via.placeholder.com/400x300?text=Kia+K5" class="card-img-top car-img" alt="Kia K5">
+                            <div class="card-body">
+                                <h5 class="card-title">Kia K5 2022</h5>
+                                <p class="card-text text-muted small">2.5 л, бензин, автомат, 8 700 км</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-tag text-danger">1 950 000 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-grid">
+                                    <a href="#" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Авто 6 -->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="card car-card h-100">
+                            <span class="badge bg-danger badge-discount">-5%</span>
+                            <img src="https://via.placeholder.com/400x300?text=Hyundai+Sonata" class="card-img-top car-img" alt="Hyundai Sonata">
+                            <div class="card-body">
+                                <h5 class="card-title">Hyundai Sonata 2020</h5>
+                                <p class="card-text text-muted small">2.0 л, бензин, автомат, 47 500 км</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="price-tag text-danger">1 650 000 ₽</span>
+                                    <span class="text-muted text-decoration-line-through small">1 730 000 ₽</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-grid">
+                                    <a href="#" class="btn btn-outline-danger btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Пагинация -->
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Назад</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Вперед</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3"><i class="fas fa-car me-2"></i>AutoMarket</h5>
+                    <p>Крупнейшая площадка для покупки и продажи автомобилей в России. Более 100 000 предложений ежедневно.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="fab fa-vk fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-telegram fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="mb-3">Покупателям</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Каталог авто</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Финансирование</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Страхование</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Отзывы</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="mb-3">Продавцам</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Добавить авто</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Тарифы</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Продвижение</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Для дилеров</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Контакты</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> 8 (800) 123-45-67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@automarket.ru</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Москва, ул. Автозаводская, 12</li>
+                        <li class="mb-2"><i class="fas fa-clock me-2"></i> Пн-Пт: 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 small">&copy; 2023 AutoMarket. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none small me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none small">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

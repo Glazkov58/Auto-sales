@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoMarket - Продажа подержанных автомобилей</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.tryapi.ru/css/bootstrap/5.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконка Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #f00909;
+            --secondary-color: #6c757d;
+            --accent-color: #ff0000;
+
+        }
+        body {
+            background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .car-card {
+            transition: transform 0.3s;
+        }
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .hero-section {
+            background: url('https://via.placeholder.com/1920x600') no-repeat center center;
+            background-size: cover;
+            padding: 100px 0;
+            position: relative;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+        }
+        .hero-content {
+            position: relative;
+            color: white;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fa0000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fm-bold" href="/">
+                <i class="fas fa-car me-2"></i>AutoMarket
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="/auth" class="btn btn-outline-light me-2">Войти</a>
+                    <a href="/addauth" class="btn btn-danger">Разместить объявление</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section class="hero-section mb-5">
+        <div class="container hero-content text-center">
+            <h1 class="display-4 fw-bold mb-4">Найдите свой идеальный автомобиль</h1>
+            <p class="lead mb-5">Более 10 000 проверенных подержанных автомобилей по всей стране</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="row g-3">
+                                <div class="col-md-4">
+                                    <select class="form-select">
+                                        <option selected>Марка</option>
+                                        <option>Toyota</option>
+                                        <option>Honda</option>
+                                        <option>BMW</option>
+                                        <option>Mercedes</option>
+                                        <option>Audi</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select">
+                                        <option selected>Модель</option>
+                                        <option>Все модели</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select">
+                                        <option selected>Год</option>
+                                        <option>2020+</option>
+                                        <option>2015-2020</option>
+                                        <option>2010-2015</option>
+                                        <option>До 2010</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select">
+                                        <option selected>Цена от</option>
+                                        <option>500 000 ₽</option>
+                                        <option>1 000 000 ₽</option>
+                                        <option>1 500 000 ₽</option>
+                                        <option>2 000 000 ₽</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select">
+                                        <option selected>Цена до</option>
+                                        <option>1 000 000 ₽</option>
+                                        <option>1 500 000 ₽</option>
+                                        <option>2 000 000 ₽</option>
+                                        <option>3 000 000 ₽</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-danger w-100 py-3">Найти автомобиль</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Популярные автомобили -->
+    <section class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fm-bold text-white">Популярные автомобили</h2>
+            <a href="/catalog" class="btn btn-outline-primary">Смотреть все</a>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Карточка автомобиля 1 -->
+            <div class="col-md-4" th:each="myCar : ${cars}">
+                <div class="card car-card h-100">
+                    <span class="badge bg-success position-absolute m-2">Проверенный</span>
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Toyota Camry">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="|${myCar.getMarka()} ${myCar.getModel()} ${myCar.getYear()}|"></h5>
+                        <p class="card-text text-muted" th:text="${myCar.getInfo()}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0" th:text="${#numbers.formatInteger(myCar.getPrice(), 0, 'WHITESPACE')} + ' ₽'"></h4>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="bg-light py-5 mb-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Почему выбирают нас</h2>
+            <div class="row g-4">
+                <div class="col-md-3 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Проверенные авто</h4>
+                    <p>Все автомобили проходят тщательную проверку перед продажей</p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h4>Лучшие цены</h4>
+                    <p>Мы предлагаем конкурентные цены на рынке подержанных авто</p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h4>Честные сделки</h4>
+                    <p>Прозрачные условия покупки и юридическая чистота документов</p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4>Поддержка 24/7</h4>
+                    <p>Наши консультанты всегда готовы ответить на ваши вопросы</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Как это работает -->
+    <section class="container mb-5">
+        <h2 class="text-center mb-5 text-white">Как купить автомобиль</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 text-center h-100">
+                    <div class="card-body">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 mb-3 mx-auto" style="width: 70px; height: 70px; line-height: 40px;">
+                            <span class="fs-2">1</span>
+                        </div>
+                        <h4>Выберите авто</h4>
+                        <p>Изучите наш каталог и найдите подходящий автомобиль</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 text-center h-100">
+                    <div class="card-body">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 mb-3 mx-auto" style="width: 70px; height: 70px; line-height: 40px;">
+                            <span class="fs-2">2</span>
+                        </div>
+                        <h4>Тест-драйв</h4>
+                        <p>Договоритесь о встрече и пройдите тест-драйв выбранного авто</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 text-center h-100">
+                    <div class="card-body">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 mb-3 mx-auto" style="width: 70px; height: 70px; line-height: 40px;">
+                            <span class="fs-2">3</span>
+                        </div>
+                        <h4>Оформление</h4>
+                        <p>Оформите сделку и получите ключи от своего нового автомобиля</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section class="bg-light py-5 mb-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Отзывы наших клиентов</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Алексей">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="mb-0">Алексей</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">Купил Toyota Camry через этот сервис. Все прошло гладко, автомобиль полностью соответствовал описанию. Рекомендую!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Елена">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="mb-0">Елена</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">Отличный сервис! Помогли подобрать Hyundai Solaris для дочери. Все документы оформили быстро, без проблем.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Дмитрий">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="mb-0">Дмитрий</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">Приобрел BMW X5, очень доволен. Особенно понравилась проверка авто перед покупкой - все честно и прозрачно.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section class="bg-primary text-white py-5 mb-5">
+        <div class="container text-center">
+            <h2 class="display-5 mb-4">Готовы найти свой идеальный автомобиль?</h2>
+            <p class="lead mb-4">Зарегистрируйтесь и получите доступ к эксклюзивным предложениям</p>
+            <a href="#" class="btn btn-light btn-lg px-5">Начать поиск</a>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <h5>AutoMarket</h5>
+                    <p>Лучший сервис по продаже подержанных автомобилей с 2010 года.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-vk"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5>Каталог</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Все автомобили</a></li>
+                        <li><a href="#" class="text-white-50">Новые поступления</a></li>
+                        <li><a href="#" class="text-white-50">Популярные марки</a></li>
+                        <li><a href="#" class="text-white-50">Авто до 1 000 000 ₽</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Компания</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">О нас</a></li>
+                        <li><a href="#" class="text-white-50">Контакты</a></li>
+                        <li><a href="#" class="text-white-50">Вакансии</a></li>
+                        <li><a href="#" class="text-white-50">Партнерам</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Контакты</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Самара, ул. Дачная, 2, корп. 1</li>
+                        <li><i class="fas fa-phone me-2"></i> +7 (846) 123-45-67</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@automarket.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© 2025 AutoMarket. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white-50 me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white-50">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.tryapi.ru/css/bootstrap/5.3/js//bootstrap.bundle.min.js"></script>
+</body>
+</html>
