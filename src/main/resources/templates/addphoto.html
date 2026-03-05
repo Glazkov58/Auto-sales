@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить фото автомобиля | AutoMarket</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .hero-add-car {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x400?text=Add+Car+Photos') no-repeat center center;
+            background-size: cover;
+            padding: 100px 0;
+            color: white;
+        }
+        .form-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: 1;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #dee2e6;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+        .step.completed .step-number {
+            background-color: #28a745;
+            color: white;
+        }
+        .step.active .step-number {
+            background-color: #dc3545;
+            color: white;
+        }
+        .step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .step.completed .step-label {
+            color: #28a745;
+        }
+        .step.active .step-label {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .photo-upload-area {
+            border: 2px dashed #ced4da;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: white;
+            margin-bottom: 20px;
+        }
+        .photo-upload-area:hover {
+            border-color: #dc3545;
+        }
+        .photo-upload-icon {
+            font-size: 48px;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        .photo-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .photo-thumbnail {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .remove-photo {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #dc3545;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        .photo-category {
+            margin-bottom: 30px;
+        }
+        .photo-category-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #343a40;
+            display: flex;
+            align-items: center;
+        }
+        .photo-category-icon {
+            margin-right: 10px;
+            color: #dc3545;
+        }
+        .requirements {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-car me-2"></i>AutoMarket
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Финансирование</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Оценить авто</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light me-2">
+                        <a class="nav-link" href="/auth">
+                        <i class="fas fa-user me-1"></i> Войти
+                        </a>
+                    </button>
+                    <a href="/catalog" class="btn btn-danger">
+                        <i class="fas fa-car me-1"></i> В каталог
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section class="hero-add-car">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Добавление фотографий</h1>
+            <p class="lead mb-5">BMW 5 Series 2021, 36 500 км</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <!-- Индикатор шагов -->
+        <div class="step-indicator">
+            <div class="step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Основная информация</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">2</div>
+                <div class="step-label">Фотографии</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-label">Описание</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-label">Контакты</div>
+            </div>
+        </div>
+
+        <!-- Форма добавления фото -->
+        <div class="form-section">
+            <h2 class="mb-4"><i class="fas fa-camera text-danger me-2"></i>Фотографии автомобиля</h2>
+            <p class="text-muted mb-4">Добавьте качественные фотографии автомобиля. Первые 3 фото будут отображаться в поиске.</p>
+            
+            <!-- Основные фото -->
+            <div class="photo-category">
+                <h5 class="photo-category-title">
+                    <i class="fas fa-car photo-category-icon"></i>
+                    Основные фотографии (обязательно)
+                </h5>
+                <div class="photo-upload-area" id="mainPhotosUpload">
+                    <div class="photo-upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h5>Перетащите сюда фото или нажмите для загрузки</h5>
+                    <p class="text-muted">Рекомендуется добавлять 5-10 фотографий</p>
+                    <input type="file" id="mainPhotosInput" multiple accept="image/*" style="display: none;">
+                    <button class="btn btn-outline-danger mt-2">
+                        <i class="fas fa-plus me-2"></i>Выбрать файлы
+                    </button>
+                    <p class="requirements">
+                        Минимум 3 фото: спереди, сбоку, сзади. Максимальный размер файла: 10MB. Форматы: JPG, PNG.
+                    </p>
+                </div>
+                <div class="photo-preview" id="mainPhotosPreview"></div>
+            </div>
+
+            <!-- Салон -->
+            <div class="photo-category">
+                <h5 class="photo-category-title">
+                    <i class="fas fa-couch photo-category-icon"></i>
+                    Салон (рекомендуется)
+                </h5>
+                <div class="photo-upload-area" id="interiorPhotosUpload">
+                    <div class="photo-upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h5>Фотографии салона</h5>
+                    <p class="text-muted">Покажите состояние салона, приборной панели, сидений</p>
+                    <input type="file" id="interiorPhotosInput" multiple accept="image/*" style="display: none;">
+                    <button class="btn btn-outline-secondary mt-2">
+                        <i class="fas fa-plus me-2"></i>Выбрать файлы
+                    </button>
+                </div>
+                <div class="photo-preview" id="interiorPhotosPreview"></div>
+            </div>
+
+            <!-- Документы -->
+            <div class="photo-category">
+                <h5 class="photo-category-title">
+                    <i class="fas fa-file-alt photo-category-icon"></i>
+                    Документы (рекомендуется)
+                </h5>
+                <div class="photo-upload-area" id="documentsPhotosUpload">
+                    <div class="photo-upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h5>Фотографии документов</h5>
+                    <p class="text-muted">ПТС, СТС, диагностическая карта</p>
+                    <input type="file" id="documentsPhotosInput" multiple accept="image/*" style="display: none;">
+                    <button class="btn btn-outline-secondary mt-2">
+                        <i class="fas fa-plus me-2"></i>Выбрать файлы
+                    </button>
+                </div>
+                <div class="photo-preview" id="documentsPhotosPreview"></div>
+            </div>
+
+            <!-- Двигатель -->
+            <div class="photo-category">
+                <h5 class="photo-category-title">
+                    <i class="fas fa-cog photo-category-icon"></i>
+                    Двигатель и багажник (опционально)
+                </h5>
+                <div class="photo-upload-area" id="enginePhotosUpload">
+                    <div class="photo-upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h5>Фотографии подкапотного пространства и багажника</h5>
+                    <input type="file" id="enginePhotosInput" multiple accept="image/*" style="display: none;">
+                    <button class="btn btn-outline-secondary mt-2">
+                        <i class="fas fa-plus me-2"></i>Выбрать файлы
+                    </button>
+                </div>
+                <div class="photo-preview" id="enginePhotosPreview"></div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="d-flex justify-content-between mt-5">
+                <button type="button" class="btn btn-outline-secondary">
+                    <a class="nav-link" href="/addauth">
+                    <i class="fas fa-arrow-left me-2"></i>Назад
+                    </a>
+                </button>
+                <div>
+                    <button type="button" class="btn btn-outline-danger me-2">
+                        Сохранить черновик
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        <a class="nav-link" href="/adddesc">
+                        Далее: Описание <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 small">&copy; 2023 AutoMarket. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none small me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none small">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Обработка загрузки фотографий
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция для создания превью изображения
+            function createPreview(file, previewContainer) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const preview = document.createElement('div');
+                    preview.style.position = 'relative';
+                    preview.style.display = 'inline-block';
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'photo-thumbnail';
+                    
+                    const removeBtn = document.createElement('div');
+                    removeBtn.className = 'remove-photo';
+                    removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    removeBtn.onclick = function() {
+                        preview.remove();
+                    };
+                    
+                    preview.appendChild(img);
+                    preview.appendChild(removeBtn);
+                    previewContainer.appendChild(preview);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            // Настройка загрузки для каждого блока
+            setupUpload('mainPhotosUpload', 'mainPhotosInput', 'mainPhotosPreview');
+            setupUpload('interiorPhotosUpload', 'interiorPhotosInput', 'interiorPhotosPreview');
+            setupUpload('documentsPhotosUpload', 'documentsPhotosInput', 'documentsPhotosPreview');
+            setupUpload('enginePhotosUpload', 'enginePhotosInput', 'enginePhotosPreview');
+            
+            function setupUpload(dropZoneId, inputId, previewId) {
+                const dropZone = document.getElementById(dropZoneId);
+                const fileInput = document.getElementById(inputId);
+                const previewContainer = document.getElementById(previewId);
+                
+                // Обработка клика по зоне загрузки
+                dropZone.addEventListener('click', function() {
+                    fileInput.click();
+                });
+                
+                // Обработка выбора файлов
+                fileInput.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        for (let i = 0; i < this.files.length; i++) {
+                            if (this.files[i].type.match('image.*')) {
+                                createPreview(this.files[i], previewContainer);
+                            }
+                        }
+                    }
+                });
+                
+                // Обработка перетаскивания файлов
+                dropZone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = '#dc3545';
+                    this.style.backgroundColor = 'rgba(220, 53, 69, 0.1)';
+                });
+                
+                dropZone.addEventListener('dragleave', function() {
+                    this.style.borderColor = '#ced4da';
+                    this.style.backgroundColor = 'white';
+                });
+                
+                dropZone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = '#ced4da';
+                    this.style.backgroundColor = 'white';
+                    
+                    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+                            if (e.dataTransfer.files[i].type.match('image.*')) {
+                                createPreview(e.dataTransfer.files[i], previewContainer);
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Проверка перед отправкой
+            document.querySelector('.btn-danger').addEventListener('click', function() {
+                const mainPhotos = document.querySelectorAll('#mainPhotosPreview img');
+                if (mainPhotos.length < 3) {
+                    alert('Пожалуйста, добавьте минимум 3 основных фотографии автомобиля');
+                    return;
+                }
+                
+                // Здесь можно добавить отправку формы
+                alert('Фотографии загружены, можно переходить к описанию');
+                // window.location.href = 'add-car-description.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить автомобиль | AutoMarket</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .hero-add-car {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x400?text=Add+Your+Car') no-repeat center center;
+            background-size: cover;
+            padding: 100px 0;
+            color: white;
+        }
+        .form-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: 1;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #dee2e6;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+        .step.active .step-number {
+            background-color: #dc3545;
+            color: white;
+        }
+        .step.completed .step-number {
+            background-color: #28a745;
+            color: white;
+        }
+        .step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .step.active .step-label {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .step.completed .step-label {
+            color: #28a745;
+        }
+        .photo-upload-area {
+            border: 2px dashed #ced4da;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: white;
+        }
+        .photo-upload-area:hover {
+            border-color: #dc3545;
+        }
+        .photo-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .photo-thumbnail {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            position: relative;
+        }
+        .remove-photo {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #dc3545;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .feature-checkbox {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-car me-2"></i>AutoMarket
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Финансирование</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Оценить авто</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light me-2">
+                        <a class="nav-link" href="/auth">
+                        <i class="fas fa-user me-1"></i> Войти
+                        </a>
+                    </button>
+                    <a href="/catalog" class="btn btn-danger">
+                        <i class="fas fa-car me-1"></i> В каталог
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section class="hero-add-car">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Добавить автомобиль</h1>
+            <p class="lead mb-5">Разместите объявление и найдите покупателя быстрее</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <!-- Индикатор шагов -->
+        <div class="step-indicator">
+            <div class="step active">
+                <div class="step-number">1</div>
+                <div class="step-label">Основная информация</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-label">Фотографии</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-label">Описание</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-label">Контакты</div>
+            </div>
+        </div>
+
+        <!-- Форма добавления -->
+        <div class="form-section">
+            <h2 class="mb-4"><i class="fas fa-info-circle text-danger me-2"></i>Основная информация</h2>
+            
+            <form method="post">
+                <!-- Марка и модель -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <label for="carBrand" class="form-label">Марка автомобиля <span class="text-danger">*</span></label>
+                        <select class="form-select" id="carBrand" name="carBrand" required>
+                            <option value="" selected disabled>Выберите марку</option>
+                            <option>BMW</option>
+                            <option>Mercedes-Benz</option>
+                            <option>Audi</option>
+                            <option>Toyota</option>
+                            <option>Honda</option>
+                            <option>Nissan</option>
+                            <option>Hyundai</option>
+                            <option>Kia</option>
+                            <option>Lexus</option>
+                            <option>Volkswagen</option>
+                            <option>Skoda</option>
+                            <option>Ford</option>
+                            <option>Chevrolet</option>
+                            <option>Renault</option>
+                            <option>Peugeot</option>
+                            <option>Mazda</option>
+                            <option>Mitsubishi</option>
+                            <option>Subaru</option>
+                            <option>Land Rover</option>
+                            <option>Porsche</option>
+                            <option>Volvo</option>
+                            <option>Jeep</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="carModel" class="form-label">Модель <span class="text-danger">*</span></label>
+                        <select class="form-select" id="carModel" name="carModel" disabled required>
+                            <option value="" selected disabled>Сначала выберите марку</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Год и пробег -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carYear" class="form-label">Год выпуска <span class="text-danger">*</span></label>
+                        <select class="form-select" id="carYear" name="carYear" required>
+                            <option value="" selected disabled>Выберите год</option>
+                            <option>2023</option>
+                            <option>2022</option>
+                            <option>2021</option>
+                            <option>2020</option>
+                            <option>2019</option>
+                            <option>2018</option>
+                            <option>2017</option>
+                            <option>2016</option>
+                            <option>2015</option>
+                            <option>2014</option>
+                            <option>2013</option>
+                            <option>2012</option>
+                            <option>2011</option>
+                            <option>2010</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carMileage" class="form-label">Пробег, км <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="carMileage" name="carMileage" placeholder="Например: 45000" required>
+                    </div>
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carBody" class="form-label">Тип кузова</label>
+                        <select class="form-select" id="carBody" name="carBody">
+                            <option value="" selected disabled>Выберите кузов</option>
+                            <option>Седан</option>
+                            <option>Хэтчбек</option>
+                            <option>Универсал</option>
+                            <option>Внедорожник</option>
+                            <option>Кроссовер</option>
+                            <option>Купе</option>
+                            <option>Кабриолет</option>
+                            <option>Минивэн</option>
+                            <option>Пикап</option>
+                            <option>Лифтбек</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="carColor" class="form-label">Цвет</label>
+                        <select class="form-select" id="carColor" name="carColor">
+                            <option value="" selected disabled>Выберите цвет</option>
+                            <option>Белый</option>
+                            <option>Черный</option>
+                            <option>Серый</option>
+                            <option>Серебристый</option>
+                            <option>Синий</option>
+                            <option>Красный</option>
+                            <option>Зеленый</option>
+                            <option>Коричневый</option>
+                            <option>Бежевый</option>
+                            <option>Желтый</option>
+                            <option>Оранжевый</option>
+                            <option>Фиолетовый</option>
+                            <option>Голубой</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Двигатель и трансмиссия -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carEngine" class="form-label">Двигатель <span class="text-danger">*</span></label>
+                        <select class="form-select" id="carEngine" name="carEngine" required>
+                            <option value="" selected disabled>Выберите тип</option>
+                            <option>Бензин</option>
+                            <option>Дизель</option>
+                            <option>Гибрид</option>
+                            <option>Электро</option>
+                            <option>Газ</option>
+                            <option>Газ/бензин</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carVolume" class="form-label">Объем, л</label>
+                        <input type="number" step="0.1" class="form-control" id="carVolume" name="carVolume" placeholder="Например: 2.0">
+                    </div>
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carPower" class="form-label">Мощность, л.с.</label>
+                        <input type="number" class="form-control" id="carPower" name="carPower" placeholder="Например: 150">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="carTransmission" class="form-label">Коробка передач <span class="text-danger">*</span></label>
+                        <select class="form-select" id="carTransmission" name="carTransmission" required>
+                            <option value="" selected disabled>Выберите КПП</option>
+                            <option>Автомат</option>
+                            <option>Механика</option>
+                            <option>Робот</option>
+                            <option>Вариатор</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Привод и состояние -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carDrive" class="form-label">Привод</label>
+                        <select class="form-select" id="carDrive" name="carDrive">
+                            <option value="" selected disabled>Выберите привод</option>
+                            <option>Передний</option>
+                            <option>Задний</option>
+                            <option>Полный</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carCondition" class="form-label">Состояние <span class="text-danger">*</span></label>
+                        <select class="form-select" id="carCondition" name="carCondition" required>
+                            <option value="" selected disabled>Выберите состояние</option>
+                            <option>Отличное</option>
+                            <option>Хорошее</option>
+                            <option>Удовлетворительное</option>
+                            <option>Требует ремонта</option>
+                            <option>Аварийное</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <label for="carOwners" class="form-label">Владельцев по ПТС</label>
+                        <select class="form-select" id="carOwners" name="carOwners">
+                            <option value="" selected disabled>Количество</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4 и более</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="carCustoms" class="form-label">Таможня</label>
+                        <select class="form-select" id="carCustoms" name="carCustoms">
+                            <option value="" selected disabled>Статус</option>
+                            <option>Растаможен</option>
+                            <option>Не растаможен</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Цена -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="carPrice" class="form-label">Цена, ₽ <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="carPrice" name="carPrice" placeholder="Например: 1500000" required>
+                            <span class="input-group-text">₽</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Возможен торг</label>
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="bargain" id="bargainYes" value="yes" checked>
+                                <label class="form-check-label" for="bargainYes">Да</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="bargain" id="bargainNo" value="no">
+                                <label class="form-check-label" for="bargainNo">Нет</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIN и госномер -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <label for="carVin" class="form-label">VIN-номер</label>
+                        <input type="text" class="form-control" id="carVin" name="carVin" placeholder="17 символов">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="carPlate" class="form-label">Госномер</label>
+                        <input type="text" class="form-control" id="carPlate" name="carPlate" placeholder="Например: А123БВ777">
+                    </div>
+                </div>
+
+                <!-- Кнопки -->
+                <div class="d-flex justify-content-between mt-5">
+                    <button type="button" class="btn btn-outline-secondary" disabled>
+                        <i class="fas fa-arrow-left me-2"></i>Назад
+                    </button>
+                    <input type="submit" class="btn btn-danger">
+                        <a class="nav-link" href="/addphoto">
+                        Далее: Фотографии <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </input>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 small">&copy; 2023 AutoMarket. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none small me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none small">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Полный список марок и моделей
+        const brandsAndModels = {
+            "BMW": ["1 Series", "2 Series", "3 Series", "4 Series", "5 Series", "6 Series", "7 Series", "8 Series", 
+                   "X1", "X2", "X3", "X4", "X5", "X6", "X7", "Z4", "i3", "i4", "i7", "iX", "iX3"],
+            "Mercedes-Benz": ["A-Class", "B-Class", "C-Class", "E-Class", "S-Class", "CLA", "CLS", "GLA", "GLB", 
+                             "GLC", "GLE", "GLS", "G-Class", "EQA", "EQB", "EQC", "EQE", "EQS", "AMG GT"],
+            "Audi": ["A1", "A3", "A4", "A5", "A6", "A7", "A8", "Q2", "Q3", "Q5", "Q7", "Q8", "TT", "R8", 
+                    "e-tron", "Q4 e-tron", "e-tron GT", "RS6", "RS7"],
+            "Toyota": ["Camry", "Corolla", "Auris", "Avensis", "RAV4", "Highlander", "Land Cruiser", "Prado", 
+                      "C-HR", "Hilux", "Tacoma", "Alphard", "Prius", "Mirai", "bZ4X"],
+            "Honda": ["Accord", "Civic", "City", "CR-V", "HR-V", "Pilot", "Odyssey", "Fit", "e:NS1", "e:NP1"],
+            "Nissan": ["Almera", "Altima", "Sentra", "Sunny", "Teana", "Qashqai", "X-Trail", "Murano", "Patrol", 
+                      "Juke", "Leaf", "Ariya", "GT-R", "370Z"],
+            "Hyundai": ["Accent", "Elantra", "Sonata", "Solaris", "Creta", "Tucson", "Santa Fe", "Palisade", 
+                       "i30", "i40", "IONIQ 5", "IONIQ 6", "Kona Electric"],
+            "Kia": ["Rio", "Cerato", "Optima", "K5", "Stinger", "Soul", "Seltos", "Sportage", "Sorento", 
+                   "Telluride", "Carnival", "EV6", "Niro EV"],
+            "Lexus": ["ES", "IS", "LS", "UX", "NX", "RX", "GX", "LX", "LC", "RC", "RZ"],
+            "Volkswagen": ["Polo", "Jetta", "Golf", "Passat", "Arteon", "Tiguan", "Touareg", "Teramont", 
+                          "ID.3", "ID.4", "ID.6"],
+            "Skoda": ["Fabia", "Rapid", "Octavia", "Superb", "Karoq", "Kodiaq", "Enyaq iV"],
+            "Ford": ["Focus", "Fiesta", "Mondeo", "Mustang", "EcoSport", "Escape", "Explorer", "Expedition", 
+                    "F-150", "Ranger", "Mustang Mach-E", "F-150 Lightning"],
+            "Chevrolet": ["Aveo", "Cruze", "Malibu", "Impala", "Camaro", "Corvette", "Tracker", "Trax", 
+                         "Equinox", "Tahoe", "Colorado", "Silverado"],
+            "Renault": ["Logan", "Sandero", "Megane", "Fluence", "Arkana", "Captur", "Duster", "Koleos", "Zoe"],
+            "Peugeot": ["208", "301", "308", "408", "508", "2008", "3008", "5008"],
+            "Mazda": ["2", "3", "6", "CX-3", "CX-5", "CX-7", "CX-9", "CX-30", "MX-5"],
+            "Mitsubishi": ["Lancer", "Outlander", "Pajero", "Pajero Sport", "ASX", "Eclipse Cross"],
+            "Subaru": ["Impreza", "Legacy", "Outback", "Forester", "XV", "BRZ", "WRX"],
+            "Land Rover": ["Defender", "Discovery", "Discovery Sport", "Range Rover", "Range Rover Sport", 
+                          "Range Rover Velar", "Range Rover Evoque"],
+            "Porsche": ["911", "718 Boxster", "718 Cayman", "Panamera", "Taycan", "Macan", "Cayenne"],
+            "Volvo": ["S60", "S90", "V60", "V90", "XC40", "XC60", "XC90", "C40 Recharge"],
+            "Jeep": ["Renegade", "Compass", "Cherokee", "Grand Cherokee", "Wrangler"]
+        };
+
+        // Заполнение моделей при выборе марки
+        document.getElementById('carBrand').addEventListener('change', function() {
+            const brand = this.value;
+            const modelSelect = document.getElementById('carModel');
+            
+            modelSelect.innerHTML = '<option value="" selected disabled>Выберите модель</option>';
+            
+            if (brand && brandsAndModels[brand]) {
+                modelSelect.disabled = false;
+                brandsAndModels[brand].forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } else {
+                modelSelect.disabled = true;
+            }
+        });
+
+        // Валидация формы перед переходом на следующий шаг
+        document.querySelector('.btn-danger').addEventListener('click', function(e) {
+            const form = document.querySelector('form');
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+                form.classList.add('was-validated');
+                alert('Пожалуйста, заполните все обязательные поля (отмечены *)');
+            } else {
+                // Здесь можно добавить переход на следующий шаг
+                alert('Форма валидна, можно переходить к загрузке фото');
+                // window.location.href = 'add-car-photos.html';
+            }
+        });
+    </script>
+</body>
+</html>

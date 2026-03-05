@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Описание автомобиля | AutoMarket</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .hero-add-car {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x400?text=Car+Description') no-repeat center center;
+            background-size: cover;
+            padding: 100px 0;
+            color: white;
+        }
+        .form-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: 1;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #dee2e6;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+        .step.completed .step-number {
+            background-color: #28a745;
+            color: white;
+        }
+        .step.active .step-number {
+            background-color: #dc3545;
+            color: white;
+        }
+        .step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .step.completed .step-label {
+            color: #28a745;
+        }
+        .step.active .step-label {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .feature-badge {
+            margin-right: 8px;
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        .characteristic-item {
+            margin-bottom: 15px;
+        }
+        .characteristic-label {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .characteristic-value {
+            font-weight: 600;
+        }
+        .car-summary {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-car me-2"></i>AutoMarket
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Финансирование</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Оценить авто</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light me-2">
+                        <a class="nav-link" href="/auth">
+                        <i class="fas fa-user me-1"></i> Войти
+                        </a>
+                    </button>
+                    <a href="/catalog" class="btn btn-danger">
+                        <i class="fas fa-car me-1"></i> В каталог
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section class="hero-add-car">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Описание автомобиля</h1>
+            <p class="lead mb-5">BMW 5 Series 2021, 36 500 км</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <!-- Индикатор шагов -->
+        <div class="step-indicator">
+            <div class="step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Основная информация</div>
+            </div>
+            <div class="step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Фотографии</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">3</div>
+                <div class="step-label">Описание</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-label">Контакты</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Основная форма -->
+            <div class="col-lg-8">
+                <div class="form-section">
+                    <h2 class="mb-4"><i class="fas fa-align-left text-danger me-2"></i>Подробное описание</h2>
+                    
+                    <div class="mb-4">
+                        <label for="carTitle" class="form-label">Заголовок объявления <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="carTitle" 
+                               value="BMW 5 Series 2021, 2.0 л, автомат" required>
+                        <div class="form-text">Кратко опишите автомобиль. Например: "BMW 5 Series 2021, 2.0 л, автомат"</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="carDescription" class="form-label">Подробное описание <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="carDescription" rows="6" required>Продается BMW 5 Series 2021 года выпуска в отличном состоянии. Автомобиль с пробегом 36 500 км, один владелец, полная сервисная история у официального дилера. Не битый, не крашенный, все оригинальные элементы кузова. Комплектация M Sport включает: спортивный обвес, 19-дюймовые легкосплавные диски, спортивные сиденья с электрорегулировками и памятью, кожаный салон, 4-зонный климат-контроль, панорамную крышу, проекционный дисплей, мультимедийную систему с навигацией и Apple CarPlay, круиз-контроль и множество других опций.</textarea>
+                        <div class="form-text">Опишите автомобиль подробно: состояние, особенности, преимущества</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Особенности и опции</label>
+                        <div class="mb-3">
+                            <div class="d-flex flex-wrap">
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Климат-контроль
+                                </span>
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Кожаный салон
+                                </span>
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Круиз-контроль
+                                </span>
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Парктроники
+                                </span>
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Камера заднего вида
+                                </span>
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Панорамная крыша
+                                </span>
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Подогрев сидений
+                                </span>
+                                <span class="badge bg-light text-dark feature-badge">
+                                    <i class="fas fa-check-circle text-success me-1"></i> Apple CarPlay
+                                </span>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-plus me-1"></i> Добавить опцию
+                        </button>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">История обслуживания</label>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="serviceHistory" checked>
+                            <label class="form-check-label" for="serviceHistory">Полная сервисная история</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="originalParts" checked>
+                            <label class="form-check-label" for="originalParts">Оригинальные запчасти</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="warranty">
+                            <label class="form-check-label" for="warranty">Есть гарантия</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="carDefects" class="form-label">Недостатки и дефекты</label>
+                        <textarea class="form-control" id="carDefects" rows="3">Незначительные царапины на бампере. Все остальные элементы в идеальном состоянии.</textarea>
+                        <div class="form-text">Укажите все известные недостатки. Это повысит доверие покупателей.</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="carReason" class="form-label">Причина продажи</label>
+                        <input type="text" class="form-control" id="carReason" value="Покупка нового автомобиля">
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-5">
+                        <button type="button" class="btn btn-outline-secondary">
+                            <a class="nav-link" href="/addphoto">
+                            <i class="fas fa-arrow-left me-2"></i>Назад
+                            </a>
+                        </button>
+                        <div>
+                            <button type="button" class="btn btn-outline-danger me-2">
+                                Сохранить черновик
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                                <a class="nav-link" href="/addcont">
+                                Далее: Контакты <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Боковая панель с информацией об авто -->
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <div class="car-summary sticky-top" style="top: 20px;">
+                    <h5 class="mb-3">Ваш автомобиль</h5>
+                    
+                    <div class="characteristic-item">
+                        <div class="characteristic-label">Марка и модель</div>
+                        <div class="characteristic-value">BMW 5 Series</div>
+                    </div>
+                    
+                    <div class="characteristic-item">
+                        <div class="characteristic-label">Год выпуска</div>
+                        <div class="characteristic-value">2021</div>
+                    </div>
+                    
+                    <div class="characteristic-item">
+                        <div class="characteristic-label">Пробег</div>
+                        <div class="characteristic-value">36 500 км</div>
+                    </div>
+                    
+                    <div class="characteristic-item">
+                        <div class="characteristic-label">Двигатель</div>
+                        <div class="characteristic-value">2.0 л, бензин, 249 л.с.</div>
+                    </div>
+                    
+                    <div class="characteristic-item">
+                        <div class="characteristic-label">Коробка передач</div>
+                        <div class="characteristic-value">Автомат</div>
+                    </div>
+                    
+                    <div class="characteristic-item">
+                        <div class="characteristic-label">Привод</div>
+                        <div class="characteristic-value">Задний</div>
+                    </div>
+                    
+                    <div class="characteristic-item">
+                        <div class="characteristic-label">Цена</div>
+                        <div class="characteristic-value text-danger fw-bold">3 450 000 ₽</div>
+                    </div>
+                    
+                    <hr class="my-3">
+                    
+                    <h6 class="mb-2">Фотографии</h6>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <img src="https://via.placeholder.com/60x45?text=Front" class="img-thumbnail" style="width: 60px; height: 45px;">
+                        <img src="https://via.placeholder.com/60x45?text=Side" class="img-thumbnail" style="width: 60px; height: 45px;">
+                        <img src="https://via.placeholder.com/60x45?text=Rear" class="img-thumbnail" style="width: 60px; height: 45px;">
+                        <img src="https://via.placeholder.com/60x45?text=Int" class="img-thumbnail" style="width: 60px; height: 45px;">
+                    </div>
+                    
+                    <button class="btn btn-sm btn-outline-secondary w-100">
+                        <i class="fas fa-pencil-alt me-1"></i> Редактировать данные
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 small">&copy; 2023 AutoMarket. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none small me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none small">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Проверка формы перед отправкой
+        document.querySelector('.btn-danger').addEventListener('click', function() {
+            const title = document.getElementById('carTitle').value;
+            const description = document.getElementById('carDescription').value;
+            
+            if (!title || !description) {
+                alert('Пожалуйста, заполните обязательные поля: заголовок и описание');
+                return;
+            }
+            
+            if (description.length < 100) {
+                if (!confirm('Описание слишком короткое. Рекомендуем добавить больше деталей. Продолжить без изменений?')) {
+                    return;
+                }
+            }
+            
+            // Здесь можно добавить отправку формы
+            alert('Описание сохранено, можно переходить к контактам');
+            // window.location.href = 'add-car-contacts.html';
+        });
+    </script>
+</body>
+</html>
