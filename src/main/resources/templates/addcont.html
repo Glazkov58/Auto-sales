@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контактные данные | AutoMarket</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .hero-add-car {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x400?text=Contact+Details') no-repeat center center;
+            background-size: cover;
+            padding: 100px 0;
+            color: white;
+        }
+        .form-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: 1;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #dee2e6;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+        .step.completed .step-number {
+            background-color: #28a745;
+            color: white;
+        }
+        .step.active .step-number {
+            background-color: #dc3545;
+            color: white;
+        }
+        .step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .step.completed .step-label {
+            color: #28a745;
+        }
+        .step.active .step-label {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .car-summary {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .contact-method {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        .contact-method:hover {
+            border-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.05);
+        }
+        .contact-method.active {
+            border-color: #dc3545;
+            background-color: rgba(220, 53, 69, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-car me-2"></i>AutoMarket
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Финансирование</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Оценить авто</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light me-2">
+                        <a class="nav-link" href="/auth">
+                        <i class="fas fa-user me-1"></i> Войти
+                        </a>
+                    </button>
+                    <a href="/catalog" class="btn btn-danger">
+                        <i class="fas fa-car me-1"></i> В каталог
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой секция -->
+    <section class="hero-add-car">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Контактные данные</h1>
+            <p class="lead mb-5">Последний шаг перед публикацией объявления</p>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <!-- Индикатор шагов -->
+        <div class="step-indicator">
+            <div class="step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Основная информация</div>
+            </div>
+            <div class="step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Фотографии</div>
+            </div>
+            <div class="step completed">
+                <div class="step-number"><i class="fas fa-check"></i></div>
+                <div class="step-label">Описание</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">4</div>
+                <div class="step-label">Контакты</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Основная форма -->
+            <div class="col-lg-8">
+                <div class="form-section">
+                    <h2 class="mb-4"><i class="fas fa-address-book text-danger me-2"></i>Способы связи</h2>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Выберите способы связи <span class="text-danger">*</span></label>
+                        
+                        <div class="contact-method active">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="contactPhone" checked>
+                                <label class="form-check-label fw-bold" for="contactPhone">Телефон</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" value="+7 (912) 345-67-89" required>
+                                </div>
+                                <div class="col-md-6 mt-2 mt-md-0">
+                                    <select class="form-select">
+                                        <option>Доступен с 9:00 до 21:00</option>
+                                        <option>Доступен с 8:00 до 20:00</option>
+                                        <option>Доступен круглосуточно</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="contactWhatsApp">
+                                <label class="form-check-label fw-bold" for="contactWhatsApp">WhatsApp</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="tel" class="form-control" placeholder="+7 (___) ___-____" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="contactTelegram">
+                                <label class="form-check-label fw-bold" for="contactTelegram">Telegram</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="@username" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="contactEmail">
+                                <label class="form-check-label fw-bold" for="contactEmail">Электронная почта</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="email" class="form-control" placeholder="your@email.com" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Предпочтительный способ связи</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="preferredContact" id="prefPhone" value="phone" checked>
+                            <label class="form-check-label" for="prefPhone">Телефонный звонок</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="preferredContact" id="prefMessage" value="message">
+                            <label class="form-check-label" for="prefMessage">Сообщение (SMS/мессенджер)</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="contactLocation" class="form-label">Место осмотра автомобиля <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="contactLocation" rows="2" required>г. Москва, ул. Ленина, 10 (по предварительной договоренности)</textarea>
+                        <div class="form-text">Укажите адрес или район, где можно осмотреть автомобиль</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Дополнительные настройки</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hidePhone" checked>
+                            <label class="form-check-label" for="hidePhone">Скрыть номер телефона (показывать только после ввода кода)</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="autoReply">
+                            <label class="form-check-label" for="autoReply">Включить автоответчик с информацией об автомобиле</label>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-secondary">
+                            <a class="nav-link" href="/adddesc">
+                            <i class="fas fa-arrow-left me-2"></i>Назад
+                            </a>
+                        </button>
+                        <div>
+                            <button type="button" class="btn btn-outline-danger me-2">
+                                Сохранить черновик
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#publishModal">
+                                Опубликовать объявление <i class="fas fa-check ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Боковая панель с информацией об авто -->
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <div class="car-summary sticky-top" style="top: 20px;">
+                    <h5 class="mb-3">Ваше объявление</h5>
+                    
+                    <div class="mb-3">
+                        <h6>BMW 5 Series 2021, 2.0 л, автомат</h6>
+                        <p class="text-muted small">36 500 км, бензин, задний привод</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Цена:</span>
+                            <span class="fw-bold text-danger">3 450 000 ₽</span>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-2">
+                    
+                    <div class="mb-3">
+                        <h6 class="mb-2">Фотографии</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            <img src="https://via.placeholder.com/60x45?text=Front" class="img-thumbnail" style="width: 60px; height: 45px;">
+                            <img src="https://via.placeholder.com/60x45?text=Side" class="img-thumbnail" style="width: 60px; height: 45px;">
+                            <img src="https://via.placeholder.com/60x45?text=Rear" class="img-thumbnail" style="width: 60px; height: 45px;">
+                            <img src="https://via.placeholder.com/60x45?text=Int" class="img-thumbnail" style="width: 60px; height: 45px;">
+                        </div>
+                    </div>
+                    
+                    <hr class="my-2">
+                    
+                    <div class="mb-3">
+                        <h6 class="mb-2">Описание</h6>
+                        <p class="small text-muted">Продается BMW 5 Series 2021 года выпуска в отличном состоянии. Автомобиль с пробегом 36 500 км, один владелец, полная сервисная история у официального дилера...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно публикации -->
+    <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="publishModalLabel">Публикация объявления</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 72px;"></i>
+                    </div>
+                    <h4 class="mb-3">Готово к публикации!</h4>
+                    <p>Ваше объявление о продаже BMW 5 Series будет проверено и опубликовано в течение 15 минут.</p>
+                    <p>Хотите активировать дополнительные услуги продвижения?</p>
+                    
+                    <div class="form-check text-start mb-2">
+                        <input class="form-check-input" type="checkbox" id="promoTop" checked>
+                        <label class="form-check-label" for="promoTop">
+                            <span class="fw-bold">Поднять в топ</span> - 500 ₽/день
+                            <br><span class="text-muted small">Объявление будет показываться выше других в результатах поиска</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-check text-start mb-2">
+                        <input class="form-check-input" type="checkbox" id="promoHighlight">
+                        <label class="form-check-label" for="promoHighlight">
+                            <span class="fw-bold">Выделить цветом</span> - 300 ₽/день
+                            <br><span class="text-muted small">Ваше объявление будет выделено среди других</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-check text-start mb-4">
+                        <input class="form-check-input" type="checkbox" id="promoUrgent">
+                        <label class="form-check-label" for="promoUrgent">
+                            <span class="fw-bold">Срочная продажа</span> - 700 ₽/день
+                            <br><span class="text-muted small">Специальный значок для привлечения внимания</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">
+                        Опубликовать без услуг
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        Применить услуги и опубликовать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 small">&copy; 2023 AutoMarket. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none small me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none small">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Активация полей при выборе способа связи
+        document.querySelectorAll('.contact-method .form-check-input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const contactMethod = this.closest('.contact-method');
+                const inputs = contactMethod.querySelectorAll('input:not(.form-check-input), select');
+                
+                if (this.checked) {
+                    contactMethod.classList.add('active');
+                    inputs.forEach(input => input.disabled = false);
+                } else {
+                    contactMethod.classList.remove('active');
+                    inputs.forEach(input => {
+                        input.disabled = true;
+                        if (input.type !== 'checkbox' && input.type !== 'radio') {
+                            input.value = '';
+                        }
+                    });
+                }
+            });
+        });
+
+        // Проверка перед публикацией
+        document.querySelector('.btn-danger').addEventListener('click', function() {
+            const phoneChecked = document.getElementById('contactPhone').checked;
+            const hasLocation = document.getElementById('contactLocation').value.trim().length > 0;
+            
+            if (!phoneChecked && !document.getElementById('contactWhatsApp').checked && 
+                !document.getElementById('contactTelegram').checked && !document.getElementById('contactEmail').checked) {
+                alert('Пожалуйста, выберите хотя бы один способ связи');
+                return false;
+            }
+            
+            if (!hasLocation) {
+                alert('Пожалуйста, укажите место осмотра автомобиля');
+                return false;
+            }
+            
+            // Если все проверки пройдены, модальное окно откроется автоматически через data-bs-toggle
+        });
+    </script>
+</body>
+</html>

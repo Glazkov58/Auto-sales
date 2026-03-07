@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audi Q7 2022 - Детальный просмотр</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+    --bs-primary: #dc3545; /* Красный цвет Bootstrap (danger) */
+    --bs-primary-rgb: 220, 53, 69;
+    --bs-primary-bg-subtle: #f8d7da;
+    --bs-primary-border-subtle: #f1aeb5;
+    --bs-primary-text-emphasis: #58151c;
+        }
+        .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #bb2d3b;
+    --bs-btn-hover-border-color: #b02a37;
+    --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #b02a37;
+    --bs-btn-active-border-color: #a52834;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--bs-primary);
+    --bs-btn-disabled-border-color: var(--bs-primary);
+    }
+
+    .text-primary {
+  color: var(--bs-primary) !important;
+    }
+        h1.fw-bold {
+    color: white;
+        }
+         body {
+            background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .car-gallery {
+            margin-bottom: 20px;
+        }
+        .car-gallery img {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .car-gallery img:hover {
+            transform: scale(1.02);
+        }
+        .main-image {
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .thumbnail {
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .thumbnail.active, .thumbnail:hover {
+            border-color: #fd0d0d;
+        }
+        .specs-icon {
+            width: 24px;
+            text-align: center;
+            margin-right: 10px;
+            color: #fd0d0d;
+        }
+        .price-badge {
+            font-size: 1.5rem;
+            background-color: #ffffff;
+        }
+        .feature-badge {
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 5px 10px;
+        }
+        .dealer-card {
+            border-radius: 10px;
+        }
+        .test-drive-btn {
+            font-weight: bold;
+        }
+        .similar-car-card {
+            transition: transform 0.3s;
+        }
+        .similar-car-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-car me-2 text-primary"></i>AutoMarket
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Финансирование</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Отзывы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Контакты</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-danger me-2">
+                        <a class="nav-link" href="/auth">
+                        <i class="fas fa-user me-1"></i> Войти
+                        </a>
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Добавить авто
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <!-- Хлебные крошки -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                <li class="breadcrumb-item"><a href="/catalog">Каталог</a></li>
+                <li class="breadcrumb-item"><a href="#">Audi</a></li>
+                <li class="breadcrumb-item"><a href="#">Q7</a></li>
+                <li class="breadcrumb-item active text-white" aria-current="page">Audi Q7 2022</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Галерея автомобиля -->
+            <div class="col-lg-7">
+                <h1 class="fw-bold mb-4">Audi Q7 2022</h1>
+                
+                <div class="car-gallery">
+                    <!-- Главное изображение -->
+                    <div class="main-image shadow-sm">
+                        <img id="mainImage" src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" class="img-fluid w-100 text-white" alt="Audi Q7 2022">
+                    </div>
+                    
+                    <!-- Миниатюры -->
+                    <div class="d-flex flex-wrap">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="thumbnail active text-white" onclick="changeImage(this)" alt="Вид спереди">
+                        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="thumbnail text-white" onclick="changeImage(this)" alt="Вид сбоку">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="thumbnail text-white" onclick="changeImage(this)" alt="Вид сзади">
+                        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="thumbnail text-white" onclick="changeImage(this)" alt="Салон">
+                        <img src="https://images.unsplash.com/photo-1494976388901-7503363123ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="thumbnail text-white" onclick="changeImage(this)" alt="Приборная панель">
+                        <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="thumbnail text-white" onclick="changeImage(this)" alt="Двигатель">
+                    </div>
+                </div>
+
+                <!-- Описание -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="h5 mb-0"><i class="fas fa-file-alt me-2 text-primary"></i>Описание</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Audi Q7 2022 года в превосходном состоянии, один владелец, полная сервисная история у официального дилера. Автомобиль не участвовал в ДТП, все элементы кузова оригинальные.</p>
+                        <p>Комплектация S line включает: спортивный обвес, 21-дюймовые легкосплавные диски, спортивные сиденья с электрорегулировками и памятью, кожаный салон Valcona, 4-зонный климат-контроль, панорамную крышу, виртуальную приборную панель, мультимедийную систему MMI с навигацией и Apple CarPlay, адаптивный круиз-контроль и множество других опций.</p>
+                        <p>Двигатель 3.0 TDI (249 л.с.) в сочетании с 8-ступенчатым автоматом обеспечивает отличную динамику и экономичность. Расход топлива: 7.2 л/100 км в смешанном цикле.</p>
+                    </div>
+                </div>
+
+                <!-- Технические характеристики -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="h5 mb-0"><i class="fas fa-cogs me-2 text-primary"></i>Технические характеристики</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-car"></i></span> <strong>Марка:</strong> Audi</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-model"></i></span> <strong>Модель:</strong> Q7 (4M)</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-calendar-alt"></i></span> <strong>Год:</strong> 2022</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-tachometer-alt"></i></span> <strong>Пробег:</strong> 25 000 км</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-gas-pump"></i></span> <strong>Топливо:</strong> Дизель</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-horse-head"></i></span> <strong>Мощность:</strong> 249 л.с.</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-cog"></i></span> <strong>Коробка:</strong> Автомат (8 ступ.)</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-palette"></i></span> <strong>Цвет:</strong> Серый металлик</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-door-open"></i></span> <strong>Двери:</strong> 5</li>
+                                    <li class="mb-3 d-flex"><span class="specs-icon"><i class="fas fa-bolt"></i></span> <strong>Привод:</strong> Полный (Quattro)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Комплектация -->
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="h5 mb-0"><i class="fas fa-list-check me-2 text-primary"></i>Комплектация и опции</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h5 class="mb-3"><i class="fas fa-shield-alt me-2"></i>Безопасность</h5>
+                            <div>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> ABS</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> ESP</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> 8 подушек безопасности</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Камера 360°</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Датчики парковки</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Система контроля слепых зон</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Ассистент движения по полосе</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <h5 class="mb-3"><i class="fas fa-tv me-2"></i>Мультимедиа</h5>
+                            <div>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Навигационная система</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Apple CarPlay/Android Auto</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Виртуальная приборная панель</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> 2 сенсорных дисплея</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Premium звуковая система</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <h5 class="mb-3"><i class="fas fa-couch me-2"></i>Комфорт</h5>
+                            <div>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Климат-контроль 4-зонный</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Электрорегулировка сидений</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Память сидений</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Подогрев/вентиляция сидений</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Массажные сиденья</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Панорамная крыша</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Адаптивный круиз-контроль</span>
+                                <span class="badge bg-light text-dark feature-badge"><i class="fas fa-check-circle text-success me-1"></i> Бесключевой доступ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <div class="col-lg-5">
+                <!-- Цена и кнопки -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body text-center">
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <span class="price-badge p-3 rounded me-3">
+                                <span class="fw-bold fs-3">5 990 000 ₽</span>
+                            </span>
+                            <span class="badge bg-success fs-6">Есть скидка</span>
+                        </div>
+                        <div class="d-grid gap-2 mb-3">
+                            <button class="btn btn-primary btn-lg test-drive-btn">
+                                <i class="fas fa-car me-2"></i>Записаться на тест-драйв
+                            </button>
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-phone me-2"></i>Показать телефон
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-sm btn-outline-secondary me-2">
+                                <i class="far fa-heart me-1"></i> В избранное
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="fas fa-share-alt me-1"></i> Поделиться
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Информация о продавце -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="h5 mb-0"><i class="fas fa-store me-2 text-primary"></i>О продавце</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <img src="https://via.placeholder.com/80?text=DL" class="rounded-circle me-3" width="60" height="60" alt="Дилер">
+                            <div>
+                                <h5 class="mb-1">Официальный дилер Audi</h5>
+                                <p class="text-muted small mb-1"><i class="fas fa-map-marker-alt me-1"></i> Москва, Ленинградский проспект, 39</p>
+                                <p class="text-muted small mb-1"><i class="fas fa-check-circle text-success me-1"></i> Проверенный продавец</p>
+                                <p class="text-muted small"><i class="fas fa-car me-1"></i> 98 авто в продаже</p>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-phone me-2"></i>Позвонить
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                                <i class="fas fa-envelope me-2"></i>Написать сообщение
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- История автомобиля -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="h5 mb-0"><i class="fas fa-history me-2 text-primary"></i>История автомобиля</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-3 d-flex">
+                                <span class="me-3 text-success"><i class="fas fa-check-circle"></i></span>
+                                <div>
+                                    <h6 class="mb-1">Один владелец</h6>
+                                    <p class="text-muted small mb-0">Автомобиль принадлежал одному владельцу</p>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex">
+                                <span class="me-3 text-success"><i class="fas fa-check-circle"></i></span>
+                                <div>
+                                    <h6 class="mb-1">Не битый</h6>
+                                    <p class="text-muted small mb-0">Нет следов ДТП и ремонта кузова</p>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex">
+                                <span class="me-3 text-success"><i class="fas fa-check-circle"></i></span>
+                                <div>
+                                    <h6 class="mb-1">Сервисная история</h6>
+                                    <p class="text-muted small mb-0">Все ТО проводились у официального дилера</p>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex">
+                                <span class="me-3 text-success"><i class="fas fa-check-circle"></i></span>
+                                <div>
+                                    <h6 class="mb-1">Гарантия</h6>
+                                    <p class="text-muted small mb-0">Осталось 12 месяцев гарантии от дилера</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <button class="btn btn-sm btn-outline-danger w-100">
+                            <i class="fas fa-file-alt me-1"></i> Показать полный отчет
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Финансовые услуги -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h3 class="h5 mb-0"><i class="fas fa-percentage me-2 text-primary"></i>Финансовые услуги</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6 class="d-flex justify-content-between">
+                                <span>Кредит</span>
+                                <span>от 8.9%</span>
+                            </h6>
+                            <div class="progress mb-2" style="height: 8px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 85%;"></div>
+                            </div>
+                            <p class="small text-muted mb-3">Одобрение 85% заявок</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="d-flex justify-content-between">
+                                <span>Трейд-ин</span>
+                                <span>до 97% стоимости</span>
+                            </h6>
+                            <div class="progress mb-2" style="height: 8px;">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 95%;"></div>
+                            </div>
+                            <p class="small text-muted mb-3">Высокая оценка вашего авто</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-danger">
+                                <i class="fas fa-calculator me-2"></i>Рассчитать кредит
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Похожие автомобили -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="fw-bold mb-4 text-white">Похожие автомобили</h2>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 similar-car-card shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80" class="card-img-top" alt="Audi Q7">
+                    <div class="card-body">
+                        <h5 class="card-title">Audi Q7 2021</h5>
+                        <p class="card-text text-muted small">3.0 л, дизель, автомат, 45 000 км</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold fs-5">5 450 000 ₽</span>
+                            <span class="badge bg-warning text-dark">Дешевле на 540 000 ₽</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 similar-car-card shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80" class="card-img-top" alt="BMW X5">
+                    <div class="card-body">
+                        <h5 class="card-title">BMW X5 2022</h5>
+                        <p class="card-text text-muted small">3.0 л, бензин, автомат, 18 000 км</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold fs-5">6 250 000 ₽</span>
+                            <span class="badge bg-danger text-white">Дороже на 260 000 ₽</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 similar-car-card shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&h=300&q=80" class="card-img-top" alt="Mercedes GLE">
+                    <div class="card-body">
+                        <h5 class="card-title">Mercedes GLE 2021</h5>
+                        <p class="card-text text-muted small">3.0 л, дизель, автомат, 32 000 км</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold fs-5">6 100 000 ₽</span>
+                            <span class="badge bg-danger text-white">Дороже на 110 000 ₽</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3"><i class="fas fa-car me-2"></i>AutoMarket</h5>
+                    <p>Крупнейшая площадка для покупки и продажи автомобилей в России. Более 100 000 предложений ежедневно.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="fab fa-vk fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-telegram fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="mb-3">Покупателям</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Каталог авто</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Финансирование</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Страхование</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Отзывы</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="mb-3">Продавцам</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Добавить авто</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Тарифы</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Продвижение</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Для дилеров</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Контакты</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> 8 (800) 123-45-67</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@automarket.ru</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Самара, ул. Московское шоссе, 12</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 small">&copy; 2023 AutoMarket. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white text-decoration-none small me-3">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none small">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Смена главного изображения при клике на миниатюру
+        function changeImage(element) {
+            // Удаляем класс active у всех миниатюр
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            
+            // Добавляем класс active к выбранной миниатюре
+            element.classList.add('active');
+            
+            // Меняем главное изображение
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = element.src.replace('150', '600').replace('200', '800');
+            mainImage.alt = element.alt;
+        }
+        
+        // Инициализация всплывающих подсказок
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+</body>
+</html>
